@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Main from "../Routes/Main";
 import PropTypes from "prop-types";
 import Splash from "../Routes/Splash";
@@ -17,9 +17,7 @@ const LoggedOutRoutes = () => (
 );
 
 const AppRouter = ({ isLoggedIn }) => {
-  return (
-    <Router>{isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}</Router>
-  );
+  return isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />;
 };
 
 AppRouter.propTypes = {

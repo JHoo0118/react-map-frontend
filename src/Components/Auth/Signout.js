@@ -25,7 +25,7 @@ const ButtonIcon = styled.img`
 export const Signout = ({ classes }) => {
   return (
     <Wrapper>
-      <Box>로그아웃 가능</Box>
+      <Box>작성 예정</Box>
     </Wrapper>
   );
 };

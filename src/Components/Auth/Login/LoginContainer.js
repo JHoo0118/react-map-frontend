@@ -12,6 +12,7 @@ export default () => {
   const password = useInput("");
   const passwordCheck = useInput("");
   const picture = useInput("");
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const [createUserMutation] = useMutation(CREATE_USER, {
     variables: {
@@ -61,6 +62,9 @@ export default () => {
         passwordCheck.value !== ""
       ) {
         try {
+          if (!emailRegex.test(email)) {
+            return toast.error("이메일이 유효하지 않습니다.");
+          }
           if (password.value !== passwordCheck.value) {
             toast.error("비밀번호와 비밀번호 확인값이 다릅니다.");
           } else {

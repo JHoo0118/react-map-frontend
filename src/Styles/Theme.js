@@ -10,6 +10,7 @@ export default {
   lightGreyColor: "#c7c7c7",
   redColor: "#ED4956",
   blueColor: "#3897f0",
+  darkGreenColor: "#111A19",
   lightGreenColor: "#04BEA8",
   darkBlueColor: "#003569",
   greenBoxBorder: "1px solid #04BEA8",
