@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useReducer } from "react";
 import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import styled, { ThemeProvider } from "styled-components";
@@ -8,7 +8,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Routes from "./Routes";
-import Footer from "./Footer";
+import Context from "./context";
+import reducer from "./reducer";
 
 const QUERY = gql`
   {
@@ -23,6 +24,9 @@ const Wrapper = styled.div`
 `;
 
 export default () => {
+  const initialState = useContext(Context);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const {
     data: { isLoggedIn }
   } = useQuery(QUERY);
@@ -31,12 +35,11 @@ export default () => {
       <>
         <GlobalStyles />
         <Router>
-          <>
+          <Context.Provider value={{ state, dispatch }}>
             <Wrapper>
               <Routes isLoggedIn={isLoggedIn} />
-              <Footer />
             </Wrapper>
-          </>
+          </Context.Provider>
         </Router>
         <ToastContainer position={toast.POSITION.TOP_CENTER} />
       </>

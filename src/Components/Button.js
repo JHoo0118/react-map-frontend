@@ -6,15 +6,17 @@ const Container = styled.button`
   width: 100%;
   border: ${props => props.theme.whiteBoxBorder};
   border-radius: ${props => props.theme.borderRadius};
-  color: white;
+  color: ${props => props.theme.whiteColor};
   font-weight: 600;
-  background-color: black;
+  background-color: ${props => props.theme.buttonGreenColor};
   text-align: center;
   padding: 7px 0px;
   font-size: 14px;
   &:hover {
-    color: ${props => props.theme.lightGreenColor};
-    border: ${props => props.theme.greenBoxBorder};
+    background-color: #28a745;
+  }
+  &:focus {
+    outline-color: ${props => props.theme.buttonGreenColor};
   }
 `;
 

@@ -7,7 +7,8 @@ const Footer = styled.footer`
   align-items: center;
   font-weight: 600;
   font-size: 14px;
-  margin: 50px 0px;
+  margin: 25px auto;
+  width: calc(36% - 1px);
 `;
 
 const List = styled.ul`
@@ -21,7 +22,7 @@ const ListItem = styled.li`
 `;
 
 const Link = styled.a`
-  color: ${props => props.theme.lightGreenColor};
+  color: ${props => props.theme.blackColor};
   text-decoration-line: none;
 `;
 

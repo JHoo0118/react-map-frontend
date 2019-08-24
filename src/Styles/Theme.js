@@ -1,15 +1,21 @@
-const BOX_BORDER_FOR_WHITE = "1px solid #e6e6e6";
+const BOX_BORDER_FOR_WHITE = "1px solid #d1d5da";
 const BOX_BORDER_FOR_GREEN = "1px solid #04BEA8";
 const BORDER_RADIUS = "4px";
 
 export default {
-  maxWidth: "935px",
-  bgColor: "#000000",
+  maxWidth: "100vw", //935
+  bgColor: "#F6F8FA",
   blackColor: "#262626",
+  whiteColor: "#fafbfc",
   darkGreyColor: "#999",
+  DeepRedColor: "#FF0000",
+  purpleColor: "#8C29B9",
   lightGreyColor: "#c7c7c7",
   redColor: "#ED4956",
-  blueColor: "#3897f0",
+  greenColor: "#2ebc4f",
+  blueColor: "#0366d6",
+  buttonGreenColor: "#2ebc4f",
+  buttonRedColor: "#c70404",
   darkGreenColor: "#111A19",
   lightGreenColor: "#04BEA8",
   darkBlueColor: "#003569",
@@ -18,7 +24,7 @@ export default {
   borderRadius: "4px",
   whiteBox: `border:${BOX_BORDER_FOR_WHITE};
              border-radius:${BORDER_RADIUS};
-             background-color:white;
+             background-color:#FAFBFC;
             `,
   greenBox: `border:${BOX_BORDER_FOR_GREEN};
              border-radius:${BORDER_RADIUS};

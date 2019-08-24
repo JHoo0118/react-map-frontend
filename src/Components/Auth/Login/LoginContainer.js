@@ -12,6 +12,7 @@ export default () => {
   const password = useInput("");
   const passwordCheck = useInput("");
   const picture = useInput("");
+  //eslint-disable-next-line
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const [createUserMutation] = useMutation(CREATE_USER, {
@@ -62,7 +63,7 @@ export default () => {
         passwordCheck.value !== ""
       ) {
         try {
-          if (!emailRegex.test(email)) {
+          if (!emailRegex.test(email.value)) {
             return toast.error("이메일이 유효하지 않습니다.");
           }
           if (password.value !== passwordCheck.value) {

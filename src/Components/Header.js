@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { gql } from "apollo-boost";
 import styled from "styled-components";
-import { device } from "./Device";
 import Picture from "./Picture";
 import { useMutation } from "react-apollo-hooks";
 
@@ -11,66 +10,29 @@ const LOG_OUT = gql`
   }
 `;
 
-const Header = styled.div`
-  width: 100%;
-  border: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 25px 0px;
-  z-index: 2;
-`;
-
-const HeaderWrapper = styled.div`
-  width: 100%;
-  max-width: ${props => props.theme.maxWidth};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
-
-const HeaderColumn = styled.div`
-  width: 30%;
-  text-align: center;
-  &:first-child {
-    margin-right: auto;
-    text-align: left;
-  }
-  &:last-child {
-    margin-left: auto;
-    text-align: right;
-  }
-`;
-
-const Logo = styled.a`
-  color: #e6e6e6;
-  font-size: 32px;
-  font-weight: 700;
-  text-decoration: none;
-`;
-
 const ProfileContainer = styled.div`
+  width: auto;
+  right: 0;
+  position: absolute;
+  background: transparent;
+  z-index: 20;
   display: flex;
-  justify-content: flex-end;
+  top: 10px;
+  right: 20px;
 `;
 
 const PictureBox = styled.div`
-  background-color: #e6e6e6;
-  border-radius: 50px;
-  max-height: 50px;
-  margin-right: 20px;
+  background-color: white;
+  border-radius: 30px;
+  max-height: 30px;
+  margin-right: 10px;
 `;
 
 const ProfileUserName = styled.a`
-  color: ${props => props.theme.lightGreyColor};
+  color: ${props => props.theme.blackColor};
   display: block;
   text-decoration: none;
-  font-size: 40px;
+  font-size: 24px;
   cursor: pointer;
   text-align: center;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -81,12 +43,12 @@ const ProfileUserName = styled.a`
   user-select: none; /* Non-prefixed version, currently
                      supported by Chrome and Opera */
   &:hover {
-    color: ${props => props.theme.lightGreenColor};
+    color: ${props => props.theme.darkGreyColor};
   }
 `;
 
 const DropdownBox = styled.div`
-  top: 60px;
+  top: 50px;
   background-color: rgb(17, 26, 25);
   position: absolute;
   right: 0;
@@ -97,7 +59,7 @@ const DropdownBox = styled.div`
     border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgb(17, 26, 25);
     border-width: 10px;
     bottom: 100%;
-    left: 86%;
+    left: 95%;
     content: " ";
     height: 0px;
     width: 0px;
@@ -119,6 +81,11 @@ const DropdownUnOrderedList = styled.ul`
 const DropdownList = styled.li`
   display: list-item;
   padding: 20px 0px;
+  width: 70%;
+  margin: 0px auto;
+  &:not(:last-child) {
+    border-bottom: ${props => props.theme.whiteBoxBorder};
+  }
 `;
 
 const DropdownLink = styled.a`
@@ -126,7 +93,7 @@ const DropdownLink = styled.a`
   text-decoration: none;
   cursor: pointer;
   &:hover {
-    color: ${props => props.theme.lightGreenColor};
+    color: ${props => props.theme.darkGreyColor};
   }
 `;
 
@@ -143,37 +110,26 @@ export default ({ name, picture }) => {
 
   return (
     <>
-      <Header>
-        <HeaderWrapper>
-          <HeaderColumn>
-            <Logo href="#">React Map</Logo>
-          </HeaderColumn>
-          <HeaderColumn>
-            <ProfileContainer>
-              <>
-                <PictureBox>
-                  <Picture size="md" url={picture} />
-                </PictureBox>
-                <ProfileUserName onClick={handleDropbox}>
-                  {name}
-                </ProfileUserName>
-                {isOpened && (
-                  <DropdownBox>
-                    <DropdownUnOrderedList>
-                      <DropdownList>
-                        <DropdownLink href="#">프로필</DropdownLink>
-                      </DropdownList>
-                      <DropdownList>
-                        <DropdownLink onClick={logOut}>로그아웃</DropdownLink>
-                      </DropdownList>
-                    </DropdownUnOrderedList>
-                  </DropdownBox>
-                )}
-              </>
-            </ProfileContainer>
-          </HeaderColumn>
-        </HeaderWrapper>
-      </Header>
+      <ProfileContainer>
+        <>
+          <PictureBox>
+            <Picture size="sm" url={picture} />
+          </PictureBox>
+          <ProfileUserName onClick={handleDropbox}>{name}</ProfileUserName>
+          {isOpened && (
+            <DropdownBox>
+              <DropdownUnOrderedList>
+                <DropdownList>
+                  <DropdownLink href="#">프로필</DropdownLink>
+                </DropdownList>
+                <DropdownList>
+                  <DropdownLink onClick={logOut}>로그아웃</DropdownLink>
+                </DropdownList>
+              </DropdownUnOrderedList>
+            </DropdownBox>
+          )}
+        </>
+      </ProfileContainer>
     </>
   );
 };

@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { device } from "./Device";
+import Context from "./context";
+import NoContent from "./Pin/NoContent";
+import CreatePin from "./Pin/CreatePin";
 
-const Container = styled.div`
-  min-width: 350;
-  max-width: 400;
-  max-height: calc(100vh - 64px);
+const BlogBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: ${props => props.theme.whiteColor};
+  height: 100%;
+  width: 400px;
+  width: ${props => props.width}px;
   overflow-y: scroll;
   display: flex;
   justify-content: center;
-
-  ${device.medium`
-    max-width: 100%;
-    max-height: 300;
-    overflow-X: hidden;
-    overflow-Y: "scroll"
-  `}
+  position: absolute;
+  transition: all 0.3s ease-in-out;
+  transform: ${props => props.translateVal};
+  overflow-x: hidden;
+  z-index: 30;
 `;
 
-export default () => <Container>블로그</Container>;
+export default ({ translateVal = "translate(-400px)" }) => {
+  const { state } = useContext(Context);
+  const { draft } = state;
+
+  return (
+    <BlogBox translateVal={translateVal}>
+      {!draft ? <NoContent /> : <CreatePin draft={draft} />}
+    </BlogBox>
+  );
+};

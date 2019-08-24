@@ -13,16 +13,7 @@ const Box = styled.div`
   ${props => props.theme.whiteBox}
 `;
 
-const ButtonText = styled.span`
-  color: orange;
-`;
-
-const ButtonIcon = styled.img`
-  margin-left: 5px;
-  color: orange;
-`;
-
-export const Signout = ({ classes }) => {
+export const Signout = () => {
   return (
     <Wrapper>
       <Box>작성 예정</Box>

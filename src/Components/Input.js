@@ -3,16 +3,18 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Container = styled.input`
-  border: 0;
-  border: ${props => props.theme.greenBoxBorder};
+  border: ${props => props.theme.whiteBoxBorder};
   border-radius: ${props => props.theme.borderRadius};
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.whiteColor};
   height: 35px;
   font-size: 12px;
   padding: 0px 15px;
-  color: white;
+  color: ${props => props.theme.blackColor};
   &::placeholder {
-    color: white;
+    color: ${props => props.theme.blackColor};
+  }
+  &:focus {
+    outline-color: blue;
   }
 `;
 
