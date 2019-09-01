@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext, Fragment } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import styled from "styled-components";
-import ReactMapGL, { NavigationControl, Marker } from "react-map-gl";
+import ReactMapGL, { NavigationControl, Marker, Popup } from "react-map-gl";
 import Context from "./context";
 import Blog from "./Blog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "react-apollo-hooks";
 import { GET_PINS_QUERY } from "./Pin/PinQueries";
+import TimeAgo from "./TimeAgo";
 
 const INITIAL_VIEWPORT = {
   latitude: 37.550497,
@@ -25,20 +26,6 @@ const DeleteIcon = styled.button`
   color: red;
 `;
 
-const PopupImage = styled.div`
-  padding: 0.4em;
-  height: 200;
-  width: 200;
-  object-fit: "cover";
-`;
-
-const PopupTab = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
 const UserOriginLocationPinContiner = styled.div`
   color: ${props => props.theme.DeepRedColor};
 `;
@@ -49,6 +36,10 @@ const UserSelectLocationPinContiner = styled.div`
 
 const UserCreatePinContainer = styled.div`
   color: ${props => props.theme.blueColor};
+`;
+
+const UserCreatePinContainerNewest = styled.div`
+  color: limegreen;
 `;
 
 const ToggleButtonBox = styled.div`
@@ -81,11 +72,48 @@ const ToggleButton = styled.button`
   }
 `;
 
+const PopupImage = styled.img`
+  padding: 0.4em;
+  width: 400px;
+  height: 400px;
+  object-fit: "cover";
+`;
+
+const PopupTab = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const PopupWrapper = styled.div``;
+
+const PopupText = styled.span``;
+
 export default () => {
   const { state, dispatch } = useContext(Context);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const [userPosition, setUserPosition] = useState(null);
   const { data: getPins, loading } = useQuery(GET_PINS_QUERY);
+  const [popup, setPopup] = useState(null);
+  let getPinsVal = "";
+  if (!loading) {
+    getPinsVal = getPins.getPins;
+  }
+
+  const getPinsFunc = useCallback(() => {
+    if (!loading) {
+      dispatch({ type: "GET_PINS", payload: getPinsVal });
+    }
+  }, [loading, dispatch, getPinsVal]);
+
+  useEffect(() => {
+    let isSubscribed = true;
+    if (isSubscribed && !loading) {
+      getPinsFunc();
+    }
+    return () => (isSubscribed = false);
+  }, [getPinsFunc, loading]);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -93,7 +121,7 @@ export default () => {
       getUserPosition();
     }
     return () => (isSubscribed = false);
-  }, []);
+  });
 
   const getUserPosition = () => {
     if ("geolocation" in navigator) {
@@ -120,6 +148,22 @@ export default () => {
       payload: { longitude, latitude }
     });
     dispatch({ type: "ALWAYS_TRUE" });
+  };
+
+  const handlePopupClick = () => {
+    if (popup !== null && state.draft === null) {
+      dispatch({ type: "ALWAYS_FALSE" });
+    }
+  };
+
+  const highlightNewPin = pin => {
+    const isNewPin = TimeAgo(pin) <= 30;
+    return isNewPin;
+  };
+
+  const handleSelectPin = pin => {
+    setPopup(pin);
+    dispatch({ type: "SET_PIN", payload: pin });
   };
 
   return (
@@ -163,7 +207,7 @@ export default () => {
               </UserOriginLocationPinContiner>
             </Marker>
           )}
-          {state.draft && (
+          {state.draft && state.isOpened && (
             <Marker
               latitude={state.draft.latitude}
               longitude={state.draft.longitude}
@@ -175,21 +219,46 @@ export default () => {
               </UserSelectLocationPinContiner>
             </Marker>
           )}
-          {getPins.getPins.map(pin => (
-            <Fragment key={pin.id}>
-              <Marker
-                key={pin.id}
-                latitude={pin.latitude}
-                longitude={pin.longitude}
-                offsetLeft={-19}
-                offsetTop={-37}
-              >
-                <UserCreatePinContainer>
+          {state.pins.map(pin => (
+            <Marker
+              key={pin.id}
+              latitude={pin.latitude}
+              longitude={pin.longitude}
+              offsetLeft={-19}
+              offsetTop={-37}
+            >
+              {highlightNewPin(pin) ? (
+                <UserCreatePinContainerNewest
+                  onClick={() => handleSelectPin(pin)}
+                >
+                  <FontAwesomeIcon icon={faMapPin} size="2x" />
+                </UserCreatePinContainerNewest>
+              ) : (
+                <UserCreatePinContainer onClick={() => handleSelectPin(pin)}>
                   <FontAwesomeIcon icon={faMapPin} size="2x" />
                 </UserCreatePinContainer>
-              </Marker>
-            </Fragment>
+              )}
+            </Marker>
           ))}
+          {popup && (
+            <Popup
+              anchor="top"
+              latitude={popup.latitude}
+              longitude={popup.longitude}
+              closeOnClick={false}
+              onClose={() => setPopup(null)}
+              onClick={handlePopupClick}
+            >
+              <PopupImage src={popup.image} alt={popup.title} />
+              <PopupTab>
+                <PopupWrapper>
+                  <PopupText>
+                    {popup.latitude.toFixed(6)}, {popup.longitude.toFixed(6)}
+                  </PopupText>
+                </PopupWrapper>
+              </PopupTab>
+            </Popup>
+          )}
         </ReactMapGL>
       )}
     </>

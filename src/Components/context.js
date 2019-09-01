@@ -2,7 +2,9 @@ import { createContext } from "react";
 
 const Context = createContext({
   draft: null,
-  isOpened: false
+  isOpened: false,
+  pins: [],
+  currentPin: null
 });
 
 export default Context;

@@ -26,6 +26,7 @@ export const CREATE_PIN = gql`
         email
         picture
       }
+      createdAt
     }
   }
 `;

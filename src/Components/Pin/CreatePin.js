@@ -150,15 +150,7 @@ export default ({ draft }) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [content, setContent] = useState("");
-  const [createPinMutation] = useMutation(CREATE_PIN, {
-    variables: {
-      title: title,
-      content: content,
-      image: image.name,
-      latitude: draft.latitude,
-      longitude: draft.longitude
-    }
-  });
+  const [createPinMutation] = useMutation(CREATE_PIN);
 
   const HandleDeleteDraft = () => {
     setTitle("");
@@ -177,14 +169,24 @@ export default ({ draft }) => {
       "https://api.cloudinary.com/v1_1/jhoo/image/upload",
       data
     );
-    await createPinMutation();
-    toast.success("핀이 생성되었습니다.");
     return res.data.url;
   };
 
   const HandleSubmit = async event => {
     event.preventDefault();
-    await HandleImageUpload();
+    const url = await HandleImageUpload();
+    const { data: createPin } = await createPinMutation({
+      variables: {
+        title: title,
+        content: content,
+        image: url,
+        latitude: draft.latitude,
+        longitude: draft.longitude
+      }
+    });
+    await dispatch({ type: "CREATE_PIN", payload: createPin.createPin });
+    toast.success("핀이 생성되었습니다.");
+    HandleDeleteDraft();
   };
 
   return (
