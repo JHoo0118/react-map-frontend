@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faCameraRetro } from "@fortawesome/free-solid-svg-icons";
 import Context from "../context";
-import { useMutation } from "react-apollo-hooks";
-import { CREATE_PIN } from "./PinQueries";
+import { useMutation, useQuery } from "react-apollo-hooks";
+import { CREATE_PIN, GET_PINS_QUERY } from "./PinQueries";
 import { toast } from "react-toastify";
 
 const Container = styled.div`
@@ -150,7 +150,10 @@ export default ({ draft }) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [content, setContent] = useState("");
-  const [createPinMutation] = useMutation(CREATE_PIN);
+  useQuery(GET_PINS_QUERY);
+  const [createPinMutation] = useMutation(CREATE_PIN, {
+    refetchQueries: () => [{ query: GET_PINS_QUERY }]
+  });
 
   const HandleDeleteDraft = () => {
     setTitle("");
@@ -203,6 +206,7 @@ export default ({ draft }) => {
             placeholder="제목"
             rows="1"
             cols="16"
+            maxLength="16"
             onChange={e => setTitle(e.target.value)}
           />
         </TitleTextareaContainer>
@@ -228,6 +232,7 @@ export default ({ draft }) => {
           placeholder="내용"
           rows="8"
           cols="32"
+          maxLength="800"
           onChange={e => setContent(e.target.value)}
         />
       </ContentTextareaContainer>

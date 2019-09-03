@@ -4,10 +4,12 @@ import ReactMapGL, { NavigationControl, Marker, Popup } from "react-map-gl";
 import Context from "./context";
 import Blog from "./Blog";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapPin } from "@fortawesome/free-solid-svg-icons";
-import { useQuery } from "react-apollo-hooks";
-import { GET_PINS_QUERY } from "./Pin/PinQueries";
+import { faMapPin, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { useQuery, useMutation } from "react-apollo-hooks";
+import { GET_PINS_QUERY, DELETE_PIN } from "./Pin/PinQueries";
 import TimeAgo from "./TimeAgo";
+import { ME } from "./SharedQueries";
+import FullPhoto from "./FullPhoto";
 
 const INITIAL_VIEWPORT = {
   latitude: 37.550497,
@@ -20,10 +22,6 @@ const NavigationControlBox = styled.div`
   top: 60px;
   right: 0;
   margin: 1em;
-`;
-
-const DeleteIcon = styled.button`
-  color: red;
 `;
 
 const UserOriginLocationPinContiner = styled.div`
@@ -47,7 +45,7 @@ const ToggleButtonBox = styled.div`
   top: 14px;
   left: ${props => props.left};
   transform: ${props => props.translateVal};
-  transition: all 0.3s ease-in-out;
+  transition: all 0.4s ease-in-out;
   z-index: 30;
 `;
 
@@ -74,8 +72,8 @@ const ToggleButton = styled.button`
 
 const PopupImage = styled.img`
   padding: 0.4em;
-  width: 400px;
-  height: 400px;
+  width: 200px;
+  height: 100px;
   object-fit: "cover";
 `;
 
@@ -84,18 +82,37 @@ const PopupTab = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin: 10px;
 `;
 
-const PopupWrapper = styled.div``;
+const PopupWrapper = styled.div`
+  width: 100%;
+`;
 
-const PopupText = styled.span``;
+const PopupText = styled.span`
+  display: block;
+  text-align: center;
+`;
+
+const DeleteIconContainer = styled.div`
+  margin-top: 10px;
+  color: ${props => props.theme.redColor};
+`;
 
 export default () => {
   const { state, dispatch } = useContext(Context);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const [userPosition, setUserPosition] = useState(null);
   const { data: getPins, loading } = useQuery(GET_PINS_QUERY);
+  const [deletePinMutation] = useMutation(DELETE_PIN, {
+    refetchQueries: () => [{ query: GET_PINS_QUERY }]
+  });
+  const {
+    data: { me }
+  } = useQuery(ME);
   const [popup, setPopup] = useState(null);
+  const isSelf = () => me.id === popup.author.id;
+
   let getPinsVal = "";
   if (!loading) {
     getPinsVal = getPins.getPins;
@@ -133,7 +150,7 @@ export default () => {
     }
   };
 
-  const HandleToggleButton = () => {
+  const handleToggleButton = () => {
     dispatch({ type: "HANDLE_TOGGLE_BUTTON" });
   };
 
@@ -150,12 +167,6 @@ export default () => {
     dispatch({ type: "ALWAYS_TRUE" });
   };
 
-  const handlePopupClick = () => {
-    if (popup !== null && state.draft === null) {
-      dispatch({ type: "ALWAYS_FALSE" });
-    }
-  };
-
   const highlightNewPin = pin => {
     const isNewPin = TimeAgo(pin) <= 30;
     return isNewPin;
@@ -164,18 +175,33 @@ export default () => {
   const handleSelectPin = pin => {
     setPopup(pin);
     dispatch({ type: "SET_PIN", payload: pin });
+    dispatch({ type: "ALWAYS_TRUE" });
+  };
+
+  const handleDeletePin = async pin => {
+    const {
+      data: { deletePin }
+    } = await deletePinMutation({
+      variables: {
+        id: pin.id
+      }
+    });
+    await dispatch({ type: "DELETE_PIN", payload: deletePin });
+    dispatch({ type: "ALWAYS_FALSE" });
+    setPopup(null);
   };
 
   return (
     <>
       <>
+        {state.seeFullPhoto && <FullPhoto />}
         {!state.isOpened ? (
           <ToggleButtonBox translateVal="translate(-400px)" left="400px">
-            <ToggleButton onClick={HandleToggleButton} scaleX="scaleX(-1)" />
+            <ToggleButton onClick={handleToggleButton} scaleX="scaleX(-1)" />
           </ToggleButtonBox>
         ) : (
           <ToggleButtonBox translateVal="translate(0)" left="400px">
-            <ToggleButton onClick={HandleToggleButton} />
+            <ToggleButton onClick={handleToggleButton} />
           </ToggleButtonBox>
         )}
         {state.isOpened ? <Blog translateVal="translate(0)" /> : <Blog />}
@@ -219,9 +245,9 @@ export default () => {
               </UserSelectLocationPinContiner>
             </Marker>
           )}
-          {state.pins.map(pin => (
+          {state.pins.map((pin, index) => (
             <Marker
-              key={pin.id}
+              key={index}
               latitude={pin.latitude}
               longitude={pin.longitude}
               offsetLeft={-19}
@@ -247,7 +273,6 @@ export default () => {
               longitude={popup.longitude}
               closeOnClick={false}
               onClose={() => setPopup(null)}
-              onClick={handlePopupClick}
             >
               <PopupImage src={popup.image} alt={popup.title} />
               <PopupTab>
@@ -256,6 +281,11 @@ export default () => {
                     {popup.latitude.toFixed(6)}, {popup.longitude.toFixed(6)}
                   </PopupText>
                 </PopupWrapper>
+                {isSelf() && (
+                  <DeleteIconContainer onClick={() => handleDeletePin(popup)}>
+                    <FontAwesomeIcon icon={faTrashAlt} size="2x" />
+                  </DeleteIconContainer>
+                )}
               </PopupTab>
             </Popup>
           )}

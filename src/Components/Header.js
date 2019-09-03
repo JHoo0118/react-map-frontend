@@ -15,7 +15,7 @@ const ProfileContainer = styled.div`
   right: 0;
   position: absolute;
   background: transparent;
-  z-index: 20;
+  z-index: 10;
   display: flex;
   top: 10px;
   right: 20px;
@@ -23,6 +23,7 @@ const ProfileContainer = styled.div`
 
 const PictureBox = styled.div`
   background-color: white;
+  border: 1px solid ${props => props.theme.lightGreyColor};
   border-radius: 30px;
   max-height: 30px;
   margin-right: 10px;

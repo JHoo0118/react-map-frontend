@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Context from "./context";
 import NoContent from "./Pin/NoContent";
 import CreatePin from "./Pin/CreatePin";
+import PinContent from "./Pin/PinContent";
 
 const BlogBox = styled.div`
   display: flex;
@@ -11,11 +12,9 @@ const BlogBox = styled.div`
   height: 100%;
   width: 400px;
   width: ${props => props.width}px;
-  overflow-y: scroll;
-  display: flex;
   justify-content: center;
   position: absolute;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.4s ease-in-out;
   transform: ${props => props.translateVal};
   overflow-x: hidden;
   z-index: 30;
@@ -23,11 +22,19 @@ const BlogBox = styled.div`
 
 export default ({ translateVal = "translate(-400px)" }) => {
   const { state } = useContext(Context);
-  const { draft } = state;
+  const { draft, currentPin } = state;
 
   return (
     <BlogBox translateVal={translateVal}>
-      {!draft ? <NoContent /> : <CreatePin draft={draft} />}
+      {!draft ? (
+        !currentPin ? (
+          <NoContent />
+        ) : (
+          <PinContent />
+        )
+      ) : !currentPin ? (
+        <CreatePin draft={draft} />
+      ) : null}
     </BlogBox>
   );
 };

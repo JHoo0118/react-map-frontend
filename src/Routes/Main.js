@@ -1,19 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { gql } from "apollo-boost";
 import { useQuery } from "react-apollo-hooks";
 import Header from "../Components/Header";
 import Loader from "../Components/Loader";
 import Map from "../Components/Map";
-
-const ME = gql`
-  {
-    me {
-      name
-      picture
-    }
-  }
-`;
+import { ME } from "../Components/SharedQueries";
 
 const Wrapper = styled.div`
   height: 100vh;

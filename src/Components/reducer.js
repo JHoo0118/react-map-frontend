@@ -52,6 +52,24 @@ export default function reducer(state, { type, payload }) {
         currentPin: payload,
         draft: null
       };
+    case "DELETE_PIN":
+      const deletedPin = payload;
+      const filteredPins = state.pins.filter(pin => pin.id !== deletedPin.id);
+      return {
+        ...state,
+        pins: filteredPins,
+        currentPin: null
+      };
+    case "SEE_FULL_PHOTO":
+      return {
+        ...state,
+        seeFullPhoto: true
+      };
+    case "CLOSE_FULL_PHOTO":
+      return {
+        ...state,
+        seeFullPhoto: false
+      };
     default:
       return state;
   }

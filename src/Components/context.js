@@ -4,6 +4,7 @@ const Context = createContext({
   draft: null,
   isOpened: false,
   pins: [],
+  seeFullPhoto: false,
   currentPin: null
 });
 

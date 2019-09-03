@@ -59,3 +59,11 @@ export const GET_PINS_QUERY = gql`
     }
   }
 `;
+
+export const DELETE_PIN = gql`
+  mutation deletePin($id: String!) {
+    deletePin(id: $id) {
+      id
+    }
+  }
+`;
