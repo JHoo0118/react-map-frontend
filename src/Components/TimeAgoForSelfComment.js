@@ -1,6 +1,6 @@
 export default val => {
   let current = new Date();
-  let previous = Date.parse(val);
+  let previous = val;
   let msPerMinute = 60 * 1000;
   let msPerHour = msPerMinute * 60;
   let msPerDay = msPerHour * 24;

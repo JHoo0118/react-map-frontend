@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 
 const getSize = size => {
   let number;
-  if (size === "sm") {
+  if (size === "us") {
+    number = 16;
+  } else if (size === "sm") {
     number = 30;
   } else if (size === "md") {
     number = 46;
@@ -29,7 +31,7 @@ const Picture = ({ size = "sm", url, className }) => (
 );
 
 Picture.propTypes = {
-  size: PropTypes.oneOf(["sm", "md", "lg"]),
+  size: PropTypes.oneOf(["us", "sm", "md", "lg"]),
   url: PropTypes.string.isRequired
 };
 

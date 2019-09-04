@@ -48,6 +48,7 @@ export const GET_PINS_QUERY = gql`
         picture
       }
       comments {
+        id
         text
         createdAt
         author {

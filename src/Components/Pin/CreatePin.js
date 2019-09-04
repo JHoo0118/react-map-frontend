@@ -232,7 +232,7 @@ export default ({ draft }) => {
           placeholder="내용"
           rows="8"
           cols="32"
-          maxLength="800"
+          maxLength="600"
           onChange={e => setContent(e.target.value)}
         />
       </ContentTextareaContainer>

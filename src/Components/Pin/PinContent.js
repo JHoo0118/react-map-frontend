@@ -3,12 +3,14 @@ import styled from "styled-components";
 import Context from "../context";
 import Picture from "../Picture";
 import TimeAgo from "../TimeAgo";
+import Comments from "../Comment/Comments";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: absolute;
+  background-color: ${props => props.theme.whiteColor};
   top: 0;
   width: 100%;
 `;
@@ -83,11 +85,10 @@ const Content = styled.span`
   line-height: 1.5em;
 `;
 
-const Comments = styled.span``;
-
 export default () => {
   const { state, dispatch } = useContext(Context);
   const {
+    id,
     title,
     author,
     content,
@@ -95,7 +96,6 @@ export default () => {
     comments,
     image
   } = state.currentPin;
-
   const handleTogglePopup = () => {
     dispatch({ type: "SEE_FULL_PHOTO" });
   };
@@ -117,6 +117,7 @@ export default () => {
           <Content>{content}</Content>
         </ContentBox>
         <CreatedAt>{TimeAgo(createdAt)}</CreatedAt>
+        <Comments id={id} comments={comments} author={author} />
       </Wrapper>
     </>
   );
