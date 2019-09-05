@@ -85,7 +85,7 @@ const Content = styled.span`
   line-height: 1.5em;
 `;
 
-export default () => {
+export default ({ data }) => {
   const { state, dispatch } = useContext(Context);
   const {
     id,
@@ -117,7 +117,7 @@ export default () => {
           <Content>{content}</Content>
         </ContentBox>
         <CreatedAt>{TimeAgo(createdAt)}</CreatedAt>
-        <Comments id={id} comments={comments} author={author} />
+        <Comments id={id} comments={comments} author={author} data={data} />
       </Wrapper>
     </>
   );

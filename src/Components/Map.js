@@ -8,7 +8,6 @@ import { faMapPin, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import { GET_PINS_QUERY, DELETE_PIN } from "./Pin/PinQueries";
 import TimeAgo from "./TimeAgo";
-import { ME } from "./SharedQueries";
 import FullPhoto from "./FullPhoto";
 
 const INITIAL_VIEWPORT = {
@@ -99,7 +98,7 @@ const DeleteIconContainer = styled.div`
   color: ${props => props.theme.redColor};
 `;
 
-export default () => {
+export default ({ data }) => {
   const { state, dispatch } = useContext(Context);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const [userPosition, setUserPosition] = useState(null);
@@ -107,11 +106,11 @@ export default () => {
   const [deletePinMutation] = useMutation(DELETE_PIN, {
     refetchQueries: () => [{ query: GET_PINS_QUERY }]
   });
-  const {
-    data: { me }
-  } = useQuery(ME);
+
   const [popup, setPopup] = useState(null);
-  const isSelf = () => me.id === popup.author.id;
+  const isSelf = () => {
+    return data.me.id === popup.author.id;
+  };
 
   let getPinsVal = "";
   if (!loading) {
@@ -204,7 +203,11 @@ export default () => {
             <ToggleButton onClick={handleToggleButton} />
           </ToggleButtonBox>
         )}
-        {state.isOpened ? <Blog translateVal="translate(0)" /> : <Blog />}
+        {state.isOpened ? (
+          <Blog data={data} translateVal="translate(0)" />
+        ) : (
+          <Blog />
+        )}
       </>
       {!loading && (
         <ReactMapGL

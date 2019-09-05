@@ -11,7 +11,6 @@ export default () => {
   const email = useInput("");
   const password = useInput("");
   const passwordCheck = useInput("");
-  const picture = useInput("");
   //eslint-disable-next-line
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -19,8 +18,7 @@ export default () => {
     variables: {
       name: name.value,
       email: email.value,
-      password: password.value,
-      picture: picture.value
+      password: password.value
     }
   });
 

@@ -20,7 +20,7 @@ const BlogBox = styled.div`
   z-index: 30;
 `;
 
-export default ({ translateVal = "translate(-400px)" }) => {
+export default ({ translateVal = "translate(-400px)", data }) => {
   const { state } = useContext(Context);
   const { draft, currentPin } = state;
 
@@ -30,7 +30,7 @@ export default ({ translateVal = "translate(-400px)" }) => {
         !currentPin ? (
           <NoContent />
         ) : (
-          <PinContent />
+          <PinContent data={data} />
         )
       ) : !currentPin ? (
         <CreatePin draft={draft} />

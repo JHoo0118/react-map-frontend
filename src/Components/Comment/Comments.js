@@ -14,6 +14,7 @@ import TimeAgoForSelfComment from "../TimeAgoForSelfComment";
 const CommentContainer = styled.div`
   border-top: 1px solid ${props => props.theme.lightGreyColor};
   padding-top: 5px;
+  overflow-y: auto;
 `;
 
 const CommentBox = styled.div`
@@ -24,7 +25,6 @@ const CommentBox = styled.div`
 
 const ProfileContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-bottom: 4px;
 `;
@@ -52,6 +52,11 @@ const Author = styled.span`
   margin: 0 10px 0 5px;
   font-weight: 600;
   font-size: 18px;
+`;
+
+const TextBox = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
+  margin: 5px 0;
 `;
 
 const CreatedAt = styled.span`
@@ -84,19 +89,20 @@ const Textarea = styled(TextareaAutosize)`
   }
 `;
 
-export default ({ id, comments, author }) => {
+export default ({ id, comments, data }) => {
   const newComment = useInput("");
   const [createCommentMutation] = useMutation(CREATE_COMMENT, {
     variables: { pinId: id, text: newComment.value }
   });
   const [selfComments, setSelfComments] = useState([]);
-  const onKeyPress = event => {
+  const onKeyPress = async event => {
     const { which } = event;
     if (which === 13) {
       event.preventDefault();
       newComment.setValue("");
       let now = new Date();
       now = Date.parse(now);
+      console.log(data.me.name);
       try {
         createCommentMutation();
         setSelfComments([
@@ -104,7 +110,8 @@ export default ({ id, comments, author }) => {
           {
             id: Math.floor(Math.random() * 100),
             text: newComment.value,
-            author: author,
+            author: data.me.name,
+            picture: data.me.picture,
             createAt: now
           }
         ]);
@@ -127,8 +134,8 @@ export default ({ id, comments, author }) => {
                         <Picture size="us" url={comment.author.picture} />
                       </PictureBox>
                       <Author>{comment.author.name}</Author>
-                      {comment.text}
                     </ProfileContainer>
+                    <TextBox>{comment.text}</TextBox>
                     <CreatedAt>{TimeAgo(comment.createdAt)}</CreatedAt>
                   </Comment>
                 ))}
@@ -136,11 +143,11 @@ export default ({ id, comments, author }) => {
                   <Comment key={comment.id}>
                     <ProfileContainer>
                       <PictureBox>
-                        <Picture size="us" url={comment.author.picture} />
+                        <Picture size="us" url={comment.picture} />
                       </PictureBox>
-                      <Author>{comment.author.name}</Author>
-                      {comment.text}
+                      <Author>{comment.author}</Author>
                     </ProfileContainer>
+                    <TextBox>{comment.text}</TextBox>
                     <CreatedAt>
                       {TimeAgoForSelfComment(comment.createAt)}
                     </CreatedAt>

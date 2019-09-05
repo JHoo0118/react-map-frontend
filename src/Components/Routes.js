@@ -3,10 +3,12 @@ import { Route, Switch } from "react-router-dom";
 import Main from "../Routes/Main";
 import PropTypes from "prop-types";
 import Splash from "../Routes/Splash";
+import Profile from "../Routes/Profile";
 
 const LoggedInRoutes = () => (
   <Switch>
     <Route exact path="/" component={Main} />
+    <Route exact path="/:name" component={Profile} />
   </Switch>
 );
 

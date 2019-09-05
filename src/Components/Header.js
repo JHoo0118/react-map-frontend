@@ -121,7 +121,7 @@ export default ({ name, picture }) => {
             <DropdownBox>
               <DropdownUnOrderedList>
                 <DropdownList>
-                  <DropdownLink href="#">프로필</DropdownLink>
+                  <DropdownLink href={name}>프로필</DropdownLink>
                 </DropdownList>
                 <DropdownList>
                   <DropdownLink onClick={logOut}>로그아웃</DropdownLink>

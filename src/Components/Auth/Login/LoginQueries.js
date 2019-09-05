@@ -1,18 +1,8 @@
 import { gql } from "apollo-boost";
 
 export const CREATE_USER = gql`
-  mutation createUser(
-    $name: String!
-    $email: String!
-    $password: String!
-    $picture: String
-  ) {
-    createUser(
-      name: $name
-      email: $email
-      password: $password
-      picture: $picture
-    )
+  mutation createUser($name: String!, $email: String!, $password: String!) {
+    createUser(name: $name, email: $email, password: $password)
   }
 `;
 

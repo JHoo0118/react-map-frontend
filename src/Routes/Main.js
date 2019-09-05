@@ -17,7 +17,7 @@ export default () => {
       {data && !loading ? (
         <>
           <Header name={data.me.name} picture={data.me.picture} />
-          <Map />
+          <Map data={data} />
         </>
       ) : (
         <Loader />
