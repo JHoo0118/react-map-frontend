@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export const useUnMounted = () => {
+export const useUnmounted = () => {
   const unmounted = useRef(false);
   useEffect(
     () => () => {

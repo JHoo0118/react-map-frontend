@@ -6,6 +6,7 @@ export default {
   maxWidth: "100vw", //935
   bgColor: "#F6F8FA",
   blackColor: "#262626",
+  headerBlackColor: "#24292E",
   whiteColor: "#fafbfc",
   darkGreyColor: "#999",
   DeepRedColor: "#FF0000",

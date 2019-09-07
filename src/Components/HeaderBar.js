@@ -4,22 +4,42 @@ import Picture from "./Picture";
 import { useMutation } from "react-apollo-hooks";
 import { LOG_OUT } from "./Auth/Login/LogoutQueries";
 
-const ProfileContainer = styled.div`
-  width: auto;
-  right: 0;
-  position: absolute;
-  background: transparent;
-  z-index: 10;
+const HeaderBox = styled.div`
   display: flex;
-  top: 10px;
-  right: 20px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  background-color: ${props => props.theme.headerBlackColor};
+`;
+
+const LogoBox = styled.div`
+  width: 10%;
+  margin-left: 20px;
+`;
+
+const Logo = styled.a`
+  font-size: 28px;
+  color: ${props => props.theme.whiteColor};
+  font-family: "Noto Sans KR", sans-serif;
+  text-decoration: none;
+`;
+
+const HeaderInfoBox = styled.div`
+  width: 70%;
+`;
+
+const HeaderProfileBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
 `;
 
 const PictureBox = styled.div`
   background-color: white;
   border: 1px solid ${props => props.theme.lightGreyColor};
   border-radius: 30px;
-  max-height: 30px;
+  height: 46px;
   margin-right: 10px;
   display: flex;
   align-items: center;
@@ -27,7 +47,7 @@ const PictureBox = styled.div`
 `;
 
 const ProfileUserName = styled.a`
-  color: ${props => props.theme.blackColor};
+  color: ${props => props.theme.whiteColor};
   display: block;
   text-decoration: none;
   font-size: 24px;
@@ -41,12 +61,12 @@ const ProfileUserName = styled.a`
   user-select: none; /* Non-prefixed version, currently
                      supported by Chrome and Opera */
   &:hover {
-    color: ${props => props.theme.darkGreyColor};
+    color: ${props => props.theme.lightGreyColor};
   }
 `;
 
 const DropdownBox = styled.div`
-  top: 50px;
+  top: 60px;
   background-color: rgb(17, 26, 25);
   position: absolute;
   right: 0;
@@ -57,7 +77,7 @@ const DropdownBox = styled.div`
     border-color: rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgb(17, 26, 25);
     border-width: 10px;
     bottom: 100%;
-    left: 95%;
+    left: 88%;
     content: " ";
     height: 0px;
     width: 0px;
@@ -95,7 +115,7 @@ const DropdownLink = styled.a`
   }
 `;
 
-export default ({ name, picture, size }) => {
+export default ({ name, picture }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [logOut] = useMutation(LOG_OUT);
   const handleDropbox = () => {
@@ -107,30 +127,32 @@ export default ({ name, picture, size }) => {
   };
 
   return (
-    <>
-      <ProfileContainer>
-        <>
-          <PictureBox>
-            <Picture size={size} url={picture} />
-          </PictureBox>
-          <ProfileUserName onClick={handleDropbox}>{name}</ProfileUserName>
-          {isOpened && (
-            <DropdownBox>
-              <DropdownUnOrderedList>
-                <DropdownList>
-                  <DropdownLink href={name}>프로필</DropdownLink>
-                </DropdownList>
-                <DropdownList>
-                  <DropdownLink href="/">지도</DropdownLink>
-                </DropdownList>
-                <DropdownList>
-                  <DropdownLink onClick={logOut}>로그아웃</DropdownLink>
-                </DropdownList>
-              </DropdownUnOrderedList>
-            </DropdownBox>
-          )}
-        </>
-      </ProfileContainer>
-    </>
+    <HeaderBox>
+      <LogoBox>
+        <Logo href="/">React Map</Logo>
+      </LogoBox>
+      <HeaderInfoBox></HeaderInfoBox>
+      <HeaderProfileBox>
+        <PictureBox>
+          <Picture url={picture} size="md" />
+        </PictureBox>
+        <ProfileUserName onClick={handleDropbox}>{name}</ProfileUserName>
+      </HeaderProfileBox>
+      {isOpened && (
+        <DropdownBox>
+          <DropdownUnOrderedList>
+            <DropdownList>
+              <DropdownLink href={name}>프로필</DropdownLink>
+            </DropdownList>
+            <DropdownList>
+              <DropdownLink href="/">지도</DropdownLink>
+            </DropdownList>
+            <DropdownList>
+              <DropdownLink onClick={logOut}>로그아웃</DropdownLink>
+            </DropdownList>
+          </DropdownUnOrderedList>
+        </DropdownBox>
+      )}
+    </HeaderBox>
   );
 };

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Input from "../../Input";
 import Button from "../../Button";
 import Footer from "../../Footer";
+import Helmet from "react-helmet";
 
 const Wrapper = styled.div`
   height: 86vh;
@@ -89,26 +90,36 @@ export default ({
       <FlexColBox>
         <Form>
           {action === "logIn" && (
-            <form onSubmit={onSubmit}>
-              <Label>이메일</Label>
-              <Input placeholder={""} {...email} type="email" />
-              <Label>비밀번호</Label>
-              <Input placeholder={""} {...password} type="password" />
-              <Button text={"로그인"} />
-            </form>
+            <>
+              <Helmet>
+                <title>로그인 | React Map</title>
+              </Helmet>
+              <form onSubmit={onSubmit}>
+                <Label>이메일</Label>
+                <Input placeholder={""} {...email} type="email" />
+                <Label>비밀번호</Label>
+                <Input placeholder={""} {...password} type="password" />
+                <Button text={"로그인"} />
+              </form>
+            </>
           )}{" "}
           {action === "signUp" && (
-            <form onSubmit={onSubmit}>
-              <Label>이름</Label>
-              <Input placeholder={""} {...name} />
-              <Label>이메일</Label>
-              <Input placeholder={""} {...email} type="email" />
-              <Label>비밀번호</Label>
-              <Input placeholder={""} {...password} type="password" />
-              <Label>비밀번호 확인</Label>
-              <Input placeholder={""} {...passwordCheck} type="password" />
-              <Button text={"회원가입"} />
-            </form>
+            <>
+              <Helmet>
+                <title>회원가입 | React Map</title>
+              </Helmet>
+              <form onSubmit={onSubmit}>
+                <Label>이름</Label>
+                <Input placeholder={""} {...name} />
+                <Label>이메일</Label>
+                <Input placeholder={""} {...email} type="email" />
+                <Label>비밀번호</Label>
+                <Input placeholder={""} {...password} type="password" />
+                <Label>비밀번호 확인</Label>
+                <Input placeholder={""} {...passwordCheck} type="password" />
+                <Button text={"회원가입"} />
+              </form>
+            </>
           )}
         </Form>
         {action !== "confirm" && (

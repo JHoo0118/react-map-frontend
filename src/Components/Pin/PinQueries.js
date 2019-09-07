@@ -56,6 +56,9 @@ export const GET_PINS_QUERY = gql`
           name
           picture
         }
+        pin {
+          id
+        }
       }
     }
   }

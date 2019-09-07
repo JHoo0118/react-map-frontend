@@ -102,13 +102,13 @@ export default ({ id, comments, data }) => {
       newComment.setValue("");
       let now = new Date();
       now = Date.parse(now);
-      console.log(data.me.name);
       try {
         createCommentMutation();
         setSelfComments([
           ...selfComments,
           {
             id: Math.floor(Math.random() * 100),
+            pinId: id,
             text: newComment.value,
             author: data.me.name,
             picture: data.me.picture,
@@ -139,20 +139,23 @@ export default ({ id, comments, data }) => {
                     <CreatedAt>{TimeAgo(comment.createdAt)}</CreatedAt>
                   </Comment>
                 ))}
-                {selfComments.map(comment => (
-                  <Comment key={comment.id}>
-                    <ProfileContainer>
-                      <PictureBox>
-                        <Picture size="us" url={comment.picture} />
-                      </PictureBox>
-                      <Author>{comment.author}</Author>
-                    </ProfileContainer>
-                    <TextBox>{comment.text}</TextBox>
-                    <CreatedAt>
-                      {TimeAgoForSelfComment(comment.createAt)}
-                    </CreatedAt>
-                  </Comment>
-                ))}
+                {selfComments.map(
+                  comment =>
+                    comment.pinId === id && (
+                      <Comment key={comment.id}>
+                        <ProfileContainer>
+                          <PictureBox>
+                            <Picture size="us" url={comment.picture} />
+                          </PictureBox>
+                          <Author>{comment.author}</Author>
+                        </ProfileContainer>
+                        <TextBox>{comment.text}</TextBox>
+                        <CreatedAt>
+                          {TimeAgoForSelfComment(comment.createAt)}
+                        </CreatedAt>
+                      </Comment>
+                    )
+                )}
               </Comments>
             </>
           )}

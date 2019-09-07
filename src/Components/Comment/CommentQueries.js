@@ -10,6 +10,9 @@ export const CREATE_COMMENT = gql`
         name
         picture
       }
+      pin {
+        id
+      }
       createdAt
     }
   }
