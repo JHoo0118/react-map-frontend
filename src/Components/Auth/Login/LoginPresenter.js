@@ -4,12 +4,15 @@ import Input from "../../Input";
 import Button from "../../Button";
 import Footer from "../../Footer";
 import Helmet from "react-helmet";
+import Media from "../../Media";
 
 const Wrapper = styled.div`
   height: 86vh;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${Media.medium`flex-direction: column;`}
 `;
 
 const FlexColBox = styled.div`
@@ -33,6 +36,8 @@ const ImgBox = styled.div`
   width: 100%;
   max-width: 350px;
   margin-right: 20px;
+
+  ${Media.medium`height: 280px; margin-bottom: 10px; margin-right: 0px; margin-top: 10px;`}
 `;
 
 const StateChanger = styled(Box)`
