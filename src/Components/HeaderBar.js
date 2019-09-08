@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Picture from "./Picture";
+import { Link } from "react-router-dom";
 import { useMutation } from "react-apollo-hooks";
 import { LOG_OUT } from "./Auth/Login/LogoutQueries";
 import Media from "../Components/Media";
@@ -110,7 +111,7 @@ const DropdownList = styled.li`
   }
 `;
 
-const DropdownLink = styled.a`
+const DropdownLink = styled(Link)`
   color: #e6e6e6;
   text-decoration: none;
   cursor: pointer;
@@ -146,10 +147,10 @@ export default ({ name, picture }) => {
         <DropdownBox>
           <DropdownUnOrderedList>
             <DropdownList>
-              <DropdownLink href={name}>프로필</DropdownLink>
+              <DropdownLink to={name}>프로필</DropdownLink>
             </DropdownList>
             <DropdownList>
-              <DropdownLink href="/">지도</DropdownLink>
+              <DropdownLink to="/">지도</DropdownLink>
             </DropdownList>
             <DropdownList>
               <DropdownLink onClick={logOut}>로그아웃</DropdownLink>
