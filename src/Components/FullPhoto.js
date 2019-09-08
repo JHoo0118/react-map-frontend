@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import useWindowDimensions from "./WindowDimesions";
 import Context from "./context";
+import Media from "./Media";
 
 const Container = styled.div`
   display: flex;
@@ -33,6 +34,9 @@ const CloseButton = styled.div`
 const FullPhoto = styled.img`
   max-width: 1280px;
   max-height: 720px;
+
+  ${Media.medium`max-width: 368px; max-height: 360px`}
+  ${Media.large`max-width: 480px; max-height: 460px`}
 `;
 
 export default () => {

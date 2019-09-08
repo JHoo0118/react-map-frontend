@@ -9,6 +9,7 @@ const Footer = styled.footer`
   font-size: 14px;
   margin: 25px auto;
   width: calc(36% - 1px);
+  min-width: 400px;
 `;
 
 const List = styled.ul`

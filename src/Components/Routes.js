@@ -8,7 +8,7 @@ import Profile from "../Routes/Profile";
 const LoggedInRoutes = () => (
   <Switch>
     <Route exact path="/" component={Main} />
-    <Route exact path="/:name" component={Profile} />
+    <Route path="/:name" component={Profile} />
   </Switch>
 );
 

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Picture from "./Picture";
 import { useMutation } from "react-apollo-hooks";
 import { LOG_OUT } from "./Auth/Login/LogoutQueries";
+import Media from "../Components/Media";
 
 const HeaderBox = styled.div`
   display: flex;
@@ -14,8 +15,11 @@ const HeaderBox = styled.div`
 `;
 
 const LogoBox = styled.div`
-  width: 10%;
+  width: 30%;
   margin-left: 20px;
+
+  ${Media.medium`width: 40%;`}
+  ${Media.small`width: 50%;`}
 `;
 
 const Logo = styled.a`

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { GET_PINS_QUERY } from "../Components/Pin/PinQueries";
 import { ME } from "../Components/SharedQueries";
 import Helmet from "react-helmet";
+import Media from "../Components/Media";
 
 const GET_USER = gql`
   query seeUser($name: String!) {
@@ -47,6 +48,8 @@ const TwoGrid = styled.div`
   grid-auto-rows: auto;
   grid-gap: 20px;
   margin-top: 40px;
+
+  ${Media.medium`margin-left: 20px;`}
 `;
 
 const ProfileGridItem = styled.div`
@@ -54,6 +57,7 @@ const ProfileGridItem = styled.div`
   border-radius: 6px;
   width: 100%;
   max-width: 350px;
+  min-width: 250px;
   padding: 20px;
 `;
 
@@ -84,12 +88,15 @@ const ProfileEditText = styled.span`
   color: ${props => props.theme.blackColor};
   font-family: "Noto Sans KR", sans-serif;
   margin-bottom: 40px;
+
+  ${Media.medium`margin-left: 5px;`}
 `;
 
 const EditProfileGridBox = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;
+  ${Media.medium`margin: 0 5px;`}
 `;
 
 const EditProfileGridItem = styled.div`
