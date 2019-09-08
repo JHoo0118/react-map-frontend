@@ -26,6 +26,7 @@ const LoadingText = styled.span`
 
   ${Media.large`left:40%;`}
   ${Media.medium`left:30%;`}
+  ${Media.small`left:20%;`}
 `;
 
 export default () => <LoadingText>로딩중</LoadingText>;
