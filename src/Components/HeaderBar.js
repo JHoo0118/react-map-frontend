@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Picture from "./Picture";
-import { Link } from "react-router-dom";
 import { useMutation } from "react-apollo-hooks";
 import { LOG_OUT } from "./Auth/Login/LogoutQueries";
 import Media from "../Components/Media";
@@ -20,7 +19,7 @@ const LogoBox = styled.div`
   margin-left: 20px;
 
   ${Media.medium`width: 40%;`}
-  ${Media.small`width: 50%;`}
+  ${Media.small`width: 70%;`}
 `;
 
 const Logo = styled.a`
@@ -28,6 +27,7 @@ const Logo = styled.a`
   color: ${props => props.theme.whiteColor};
   font-family: "Noto Sans KR", sans-serif;
   text-decoration: none;
+  ${Media.small`font-size: 22px;`}
 `;
 
 const HeaderInfoBox = styled.div`
@@ -111,7 +111,7 @@ const DropdownList = styled.li`
   }
 `;
 
-const DropdownLink = styled(Link)`
+const DropdownLink = styled.a`
   color: #e6e6e6;
   text-decoration: none;
   cursor: pointer;
@@ -147,10 +147,10 @@ export default ({ name, picture }) => {
         <DropdownBox>
           <DropdownUnOrderedList>
             <DropdownList>
-              <DropdownLink to={name}>프로필</DropdownLink>
+              <DropdownLink href={name}>프로필</DropdownLink>
             </DropdownList>
             <DropdownList>
-              <DropdownLink to="/">지도</DropdownLink>
+              <DropdownLink href="/">지도</DropdownLink>
             </DropdownList>
             <DropdownList>
               <DropdownLink onClick={logOut}>로그아웃</DropdownLink>

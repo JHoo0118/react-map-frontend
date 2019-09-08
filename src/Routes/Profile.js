@@ -49,7 +49,8 @@ const TwoGrid = styled.div`
   grid-gap: 20px;
   margin-top: 40px;
 
-  ${Media.medium`margin-left: 20px;`}
+  ${Media.small`justify-items: center;`}
+  ${Media.small`grid-template-columns: repeat(1, 1fr);`}
 `;
 
 const ProfileGridItem = styled.div`

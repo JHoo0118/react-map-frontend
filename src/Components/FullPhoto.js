@@ -35,8 +35,8 @@ const FullPhoto = styled.img`
   max-width: 1280px;
   max-height: 720px;
 
-  ${Media.medium`max-width: 368px; max-height: 360px`}
-  ${Media.large`max-width: 480px; max-height: 460px`}
+  ${Media.small`max-width: 320px; max-height: 150px`}
+  ${Media.medium`max-width: 360px; max-height: 330px`}
 `;
 
 export default () => {

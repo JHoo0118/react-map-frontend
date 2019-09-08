@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Media from "./Media";
 
 const Footer = styled.footer`
   display: flex;
@@ -10,6 +11,8 @@ const Footer = styled.footer`
   margin: 25px auto;
   width: calc(36% - 1px);
   min-width: 400px;
+
+  ${Media.small`visibility: hidden;`}
 `;
 
 const List = styled.ul`
