@@ -14,23 +14,16 @@ const Animation = keyframes`
   }
 `;
 
-const LoadingText = styled.span`
+const LoadingText = styled.div`
   color: ${props => props.theme.blackColor};
   font-size: 80px;
   font-weight: 600;
+  height: 100%;
   animation: ${Animation} 1s linear infinite;
-  top: 45%;
-  left: 45%;
-  position: absolute;
-  display: block;
-
-  ${Media.large`left:40%;`}
-  ${Media.medium`left:30%;`}
-<<<<<<< HEAD
-  ${Media.small`left:22%;`}
-=======
-  ${Media.small`left:20%;`}
->>>>>>> 0bf2b45898883161588c1ddf2064e46f2ff7dbfb
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${Media.small`font-size: 40px;`}
 `;
 
 export default () => <LoadingText>로딩중</LoadingText>;
