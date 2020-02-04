@@ -131,23 +131,23 @@ function Map({ data }) {
     return () => (isSubscribed = false);
   }, [getPinsFunc, loading]);
 
-  useEffect(() => {
-    let isSubscribed = true;
-    if (isSubscribed) {
-      getUserPosition();
-    }
-    return () => (isSubscribed = false);
-  });
+  // const getUserPosition = useCallback(() => {
+  //   if ("geolocation" in navigator) {
+  //     navigator.geolocation.getCurrentPosition(position => {
+  //       const { latitude, longitude } = position.coords;
+  //       setViewport({ ...viewport, latitude, longitude });
+  //       setUserPosition({ latitude, longitude });
+  //     });
+  //   }
+  // }, [viewport]);
 
-  const getUserPosition = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        setViewport({ ...viewport, latitude, longitude });
-        setUserPosition({ latitude, longitude });
-      });
-    }
-  };
+  // useEffect(() => {
+  //   let isSubscribed = true;
+  //   if (isSubscribed) {
+  //     getUserPosition();
+  //   }
+  //   return () => (isSubscribed = false);
+  // }, [getUserPosition]);
 
   const handleToggleButton = () => {
     dispatch({ type: "HANDLE_TOGGLE_BUTTON" });
