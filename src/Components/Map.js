@@ -98,7 +98,7 @@ const DeleteIconContainer = styled.div`
   color: ${props => props.theme.redColor};
 `;
 
-export default ({ data }) => {
+function Map({ data }) {
   const { state, dispatch } = useContext(Context);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const [userPosition, setUserPosition] = useState(null);
@@ -296,4 +296,6 @@ export default ({ data }) => {
       )}
     </>
   );
-};
+}
+
+export default React.memo(Map);
