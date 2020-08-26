@@ -21,34 +21,21 @@ const FlexColBox = styled.div`
 `;
 
 const Box = styled.div`
-  ${props => props.theme.whiteBox}
+  ${(props) => props.theme.whiteBox}
   border-radius: 6px;
   width: 100%;
   max-width: 350px;
-`;
-
-const ImgBox = styled.div`
-  background-image: url("https://img-wishbeen.akamaized.net/plan/1441245800799_8603567984_fdceae3bea_o.jpg");
-  background-size: cover;
-  box-shadow: rgba(31, 51, 73, 0.1) 0px 0px 30px 6px;
-  height: 424px;
-  border-radius: 6px;
-  width: 100%;
-  max-width: 350px;
-  margin-right: 20px;
-
-  ${Media.small`height: 200px; margin-bottom: 10px; margin-right: 0px; margin-top: 10px;`}
 `;
 
 const StateChanger = styled(Box)`
-  color: ${props => props.theme.blackColor};
+  color: ${(props) => props.theme.blackColor};
   box-shadow: rgba(31, 51, 73, 0.1) 0px 0px 30px 6px;
   text-align: center;
   padding: 20px 0px;
 `;
 
 const Link = styled.span`
-  color: ${props => props.theme.blueColor};
+  color: ${(props) => props.theme.blueColor};
   cursor: pointer;
 `;
 
@@ -87,11 +74,11 @@ export default ({
   email,
   password,
   passwordCheck,
-  onSubmit
+  onSubmit,
 }) => (
   <>
     <Wrapper>
-      {Media.small && action === "logIn" && <ImgBox />}
+      {Media.small && action === "logIn"}
       <FlexColBox>
         <Form>
           {action === "logIn" && (
